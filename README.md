@@ -1,2 +1,2 @@
 # MARL_Environment_Chase
-Training and evaluation MARL environment
+Code to train and evaluate MARL environment
