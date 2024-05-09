@@ -33,6 +33,7 @@ parser.add_argument('--l2-inp', type=int, default=0, help='L2-reg on input')
 parser.add_argument('--video-out', type=bool, default=False, help='video output set to False')
 parser.add_argument('--fps', type=int, default=2, help='video fps')
 parser.add_argument('--video-path', type=str, help='video output path')
+parser.add_argument('--file-suffix', type=str, help='suffix of output file name')
 args = parser.parse_args()
 
 # Print datetime for logging
@@ -286,7 +287,7 @@ for iterIdx in range(args.num_checkpoints):
         bv_dict['W_out2']  = np.array(out_weight2.T)
 
         dirOut = args.dir_out
-        title = 'behavior_output_' + str(rllib_trainer.iteration)+'iters_test_'+str(t+1)+args.fileEnd+'.mat'
+        title = 'behavior_output_' + str(rllib_trainer.iteration)+'iters_test_'+str(t+1)+args.file_suffice+'.mat'
         scio.savemat(dirOut+title,bv_dict)
         if (args.video_out == True) and (t<5):
             outName = args.video_path+"video_"+ str(rllib_trainer.iteration)+'iters_'+str(t+1)
