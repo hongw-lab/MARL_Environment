@@ -125,7 +125,7 @@ pprint.pprint(config)
 # set check point location
 dirName = args.dir_in
 import os
-checkpoint_file = dirName+"\\checkpoint-000100"
+checkpoint_file = dirName+"\\checkpoint-000020"
 filePresent = os.listdir(os.path.dirname(checkpoint_file))
 iterList = []
 
@@ -241,19 +241,19 @@ for iterIdx in range(args.num_checkpoints):
             a2_mat[j,a2_list[j]] = 1
 
         for i in range(timelength):
-            if 'agent2_new_field' in eventAll[i]['agent2']['events'][0]:
-                bv2[i,1]=1
             if 'collision' in eventAll[i]['agent2']['events'][0]:
                 bv2[i,2]=1
+            elif 'agent2_new_field' in eventAll[i]['agent2']['events'][0]:
+                bv2[i,1]=1
             elif 'approach' in eventAll[i]['agent2']['events'][0]:
                 bv2[i,3]=1
             else:
                 bv2[i,0]=1
 
-            if 'agent1_new_field' in eventAll[i]['agent1']['events'][0]:
-                bv1[i,1]=1
             if 'collision' in eventAll[i]['agent1']['events'][0]:
                 bv1[i,2]=1
+            elif 'agent1_new_field' in eventAll[i]['agent1']['events'][0]:
+                bv1[i,1]=1
             elif 'escape_far' in eventAll[i]['agent1']['events'][0]:
                 bv1[i,4]=1
             elif 'escape_near' in eventAll[i]['agent1']['events'][0]:
