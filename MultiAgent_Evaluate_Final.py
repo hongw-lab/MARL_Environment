@@ -229,10 +229,10 @@ for iterIdx in range(args.num_checkpoints):
         # retrieve activity from hook
         x1 = np.zeros((timelength,256),dtype=np.float32)
         x2 = np.zeros((timelength,256),dtype=np.float32)
-        bv1 = np.zeros((timelength,8),dtype=int)
-        bv2 = np.zeros((timelength,8),dtype=int)
-        a1_mat = np.zeros((timelength,5),dtype=int)
-        a2_mat = np.zeros((timelength,5),dtype=int)
+        bv1 = np.zeros((timelength,7),dtype=int)
+        bv2 = np.zeros((timelength,7),dtype=int)
+        a1_mat = np.zeros((timelength,4),dtype=int)
+        a2_mat = np.zeros((timelength,4),dtype=int)
 
         for j in range(timelength):
             x1[j,:] = np.array(model_1.activations['rnn'][j][0][0])
@@ -247,8 +247,6 @@ for iterIdx in range(args.num_checkpoints):
                 bv2[i,2]=1
             elif 'approach' in eventAll[i]['agent2']['events'][0]:
                 bv2[i,3]=1
-            elif 'agent2_paint' in eventAll[i]['agent2']['events'][0]:
-                bv2[i,7]=1
             else:
                 bv2[i,0]=1
 
@@ -262,8 +260,6 @@ for iterIdx in range(args.num_checkpoints):
                 bv1[i,5]=1
             elif 'escape_close' in eventAll[i]['agent1']['events'][0]:
                 bv1[i,6]=1
-            elif 'agent1_paint' in eventAll[i]['agent1']['events'][0]:
-                bv1[i,7]=1
             else:
                 bv1[i,0]=1
 
