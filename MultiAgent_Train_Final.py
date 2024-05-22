@@ -117,7 +117,7 @@ config.update({
     "num_gpus": args.num_gpus,
     "_fake_gpus": False,
 })
-pprint.pprint(config)
+# pprint.pprint(config)
 
 # create logger with ray tune
 from ray.tune import CLIReporter

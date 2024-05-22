@@ -119,13 +119,13 @@ config.update({
     "num_gpus": args.num_gpus,
     "_fake_gpus": False,
 })
-pprint.pprint(config)
+# pprint.pprint(config)
 
 ## Get checkpoint locations
 # set check point location
 dirName = args.dir_in
 import os
-checkpoint_file = dirName+"\\checkpoint-000020"
+checkpoint_file = dirName+"\\checkpoint-020000"
 filePresent = os.listdir(os.path.dirname(checkpoint_file))
 iterList = []
 
@@ -149,8 +149,7 @@ import scipy.io as scio
 
 # Restore trainer at different checkpoints and run rolled-out episodes
 for iterIdx in range(args.num_checkpoints):
-    if iterIdx > 0:
-        rllib_trainer.restore(checkpoint_list[iterIdx])
+    rllib_trainer.restore(checkpoint_list[iterIdx])
     # Retrieve evaluation episodes with information on position, distance, observation space,
     model_1 = rllib_trainer.get_policy('policy1').model
     model_2 = rllib_trainer.get_policy('policy2').model
@@ -218,7 +217,7 @@ for iterIdx in range(args.num_checkpoints):
             hidden_weight2  =  model_2.rnn.cpu().weight_hh_l0.detach().numpy()
             out_weight2     = model_2.action_branch.cpu().weight.detach().numpy()
 
-            frame_dict[env.timesteps-1] = env.render_to_image()
+            frame_dict[env.timesteps-1] = env.render_to_image2()
             count += 1
             if dones["__all__"]==True:
                 break
@@ -283,10 +282,10 @@ for iterIdx in range(args.num_checkpoints):
         bv_dict['W_out2']  = np.array(out_weight2.T)
 
         dirOut = args.dir_out
-        title = 'behavior_output_' + str(rllib_trainer.iteration)+'iters_test_'+str(t+1)+args.file_suffice+'.mat'
+        title = 'behavior_output_' + str(rllib_trainer.iteration)+'iters_test_'+str(t+1)+args.file_suffix+'.mat'
         scio.savemat(dirOut+title,bv_dict)
         if (args.video_out == True) and (t<5):
-            outName = args.video_path+"video_"+ str(rllib_trainer.iteration)+'iters_'+str(t+1)
+            outName = args.video_path+"video_" + str(rllib_trainer.iteration)+'iters_'+str(t+1)+args.file_suffix
             renderVideo(outName,frameDict = frame_dict,fps=args.fps)
             print('Video rendered successfully')
 
